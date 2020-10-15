@@ -257,6 +257,12 @@
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
+// AItomotives mode - doesnt do anything yet, but its gonna be yuge
+#ifndef MODE_AITOMOTIVES_ENABLED
+# define MODE_AITOMOTIVES_ENABLED ENABLED
+#endif
+
+//////////////////////////////////////////////////////////////////////////////
 // Auto mode - allows vehicle to trace waypoints and perform automated actions
 #ifndef MODE_AUTO_ENABLED
 # define MODE_AUTO_ENABLED ENABLED

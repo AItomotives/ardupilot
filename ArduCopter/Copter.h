@@ -199,6 +199,7 @@ public:
     friend class Mode;
     friend class ModeAcro;
     friend class ModeAcro_Heli;
+    friend class ModeAItomotives;
     friend class ModeAltHold;
     friend class ModeAuto;
     friend class ModeAutoTune;
@@ -898,6 +899,9 @@ private:
 #else
     ModeAcro mode_acro;
 #endif
+#endif
+#if MODE_AITOMOTIVES_ENABLED == ENABLED
+    ModeAItomotives mode_AItomotives;
 #endif
     ModeAltHold mode_althold;
 #if MODE_AUTO_ENABLED == ENABLED
