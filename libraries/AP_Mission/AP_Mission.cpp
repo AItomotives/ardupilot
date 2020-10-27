@@ -688,6 +688,7 @@ bool AP_Mission::stored_in_location(uint16_t id)
 {
     switch (id) {
     case MAV_CMD_NAV_WAYPOINT:
+    case MAV_CMD_NAV_WAYPOINT_REWARD:
     case MAV_CMD_NAV_LOITER_UNLIM:
     case MAV_CMD_NAV_LOITER_TURNS:
     case MAV_CMD_NAV_LOITER_TIME:
@@ -837,13 +838,13 @@ MAV_MISSION_RESULT AP_Mission::mavlink_int_to_mission_cmd(const mavlink_mission_
         return MAV_MISSION_INVALID;
 
     case MAV_CMD_NAV_WAYPOINT: {                        // MAV ID: 16
-        /*
-          the 15 byte limit means we can't fit both delay and radius
-          in the cmd structure. When we expand the mission structure
-          we can do this properly
-         */
+            /*
+              the 15 byte limit means we can't fit both delay and radius
+              in the cmd structure. When we expand the mission structure
+              we can do this properly
+             */
 #if APM_BUILD_TYPE(APM_BUILD_ArduPlane)
-        // acceptance radius in meters and pass by distance in meters
+            // acceptance radius in meters and pass by distance in meters
         uint16_t acp = packet.param2;           // param 2 is acceptance radius in meters is held in low p1
         uint16_t passby = packet.param3;        // param 3 is pass by distance in meters is held in high p1
 
@@ -853,11 +854,33 @@ MAV_MISSION_RESULT AP_Mission::mavlink_int_to_mission_cmd(const mavlink_mission_
 
         cmd.p1 = (passby << 8) | (acp & 0x00FF);
 #else
-        // delay at waypoint in seconds (this is for copters???)
-        cmd.p1 = packet.param1;
+            // delay at waypoint in seconds (this is for copters???)
+            cmd.p1 = packet.param1;
 #endif
-    }
-    break;
+        }
+            break;
+    case MAV_CMD_NAV_WAYPOINT_REWARD: {                        // MAV ID: 16
+            /*
+              the 15 byte limit means we can't fit both delay and radius
+              in the cmd structure. When we expand the mission structure
+              we can do this properly
+             */
+#if APM_BUILD_TYPE(APM_BUILD_ArduPlane)
+            // acceptance radius in meters and pass by distance in meters
+        uint16_t acp = packet.param2;           // param 2 is acceptance radius in meters is held in low p1
+        uint16_t passby = packet.param3;        // param 3 is pass by distance in meters is held in high p1
+
+        // limit to 255 so it does not wrap during the shift or mask operation
+        passby = MIN(0xFF,passby);
+        acp = MIN(0xFF,acp);
+
+        cmd.p1 = (passby << 8) | (acp & 0x00FF);
+#else
+            // delay at waypoint in seconds (this is for copters???)
+            cmd.p1 = packet.param1;
+#endif
+        }
+            break;
 
     case MAV_CMD_NAV_LOITER_UNLIM:                      // MAV ID: 17
         cmd.p1 = fabsf(packet.param3);                  // store radius as 16bit since no other params are competing for space
@@ -1279,19 +1302,30 @@ bool AP_Mission::mission_cmd_to_mavlink_int(const AP_Mission::Mission_Command& c
         // this is reserved for 16 bit command IDs
         return false;
 
-    case MAV_CMD_NAV_WAYPOINT:                          // MAV ID: 16
+        case MAV_CMD_NAV_WAYPOINT:                          // MAV ID: 16
 #if APM_BUILD_TYPE(APM_BUILD_ArduPlane)
-        // acceptance radius in meters
+            // acceptance radius in meters
 
         packet.param2 = LOWBYTE(cmd.p1);        // param 2 is acceptance radius in meters is held in low p1
         packet.param3 = HIGHBYTE(cmd.p1);       // param 3 is pass by distance in meters is held in high p1
 #else
-        // delay at waypoint in seconds
-        packet.param1 = cmd.p1;
+            // delay at waypoint in seconds
+            packet.param1 = cmd.p1;
 #endif
-        break;
+            break;
+        case MAV_CMD_NAV_WAYPOINT_REWARD:                          // MAV ID: 16
+#if APM_BUILD_TYPE(APM_BUILD_ArduPlane)
+            // acceptance radius in meters
 
-    case MAV_CMD_NAV_LOITER_UNLIM:                      // MAV ID: 17
+        packet.param2 = LOWBYTE(cmd.p1);        // param 2 is acceptance radius in meters is held in low p1
+        packet.param3 = HIGHBYTE(cmd.p1);       // param 3 is pass by distance in meters is held in high p1
+#else
+            // delay at waypoint in seconds
+            packet.param1 = cmd.p1;
+#endif
+            break;
+
+        case MAV_CMD_NAV_LOITER_UNLIM:                      // MAV ID: 17
         packet.param3 = (float)cmd.p1;
         if (cmd.content.location.loiter_ccw) {
             packet.param3 *= -1;
@@ -2094,7 +2128,7 @@ bool AP_Mission::distance_to_landing(uint16_t index, float &tot_distance, Locati
                 ret = false;
                 goto reset_do_jump_tracking;
             }
-            if (temp_cmd.id == MAV_CMD_NAV_WAYPOINT || temp_cmd.id == MAV_CMD_NAV_SPLINE_WAYPOINT || is_landing_type_cmd(temp_cmd.id)) {
+            if (temp_cmd.id == MAV_CMD_NAV_WAYPOINT || temp_cmd.id == MAV_CMD_NAV_WAYPOINT_REWARD || temp_cmd.id == MAV_CMD_NAV_SPLINE_WAYPOINT || is_landing_type_cmd(temp_cmd.id)) {
                 break;
             } else if (is_nav_cmd(temp_cmd) || temp_cmd.id == MAV_CMD_CONDITION_DELAY) {
                 // if we receive a nav command that we dont handle then give up as cant measure the distance e.g. MAV_CMD_NAV_LOITER_UNLIM
@@ -2147,7 +2181,9 @@ const char *AP_Mission::Mission_Command::type() const
 {
     switch (id) {
     case MAV_CMD_NAV_WAYPOINT:
-        return "WP";
+            return "WP";
+            case MAV_CMD_NAV_WAYPOINT:
+            return "WP";
     case MAV_CMD_NAV_SPLINE_WAYPOINT:
         return "SplineWP";
     case MAV_CMD_NAV_RETURN_TO_LAUNCH:
