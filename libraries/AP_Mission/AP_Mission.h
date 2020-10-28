@@ -198,6 +198,10 @@ public:
         float release_rate;     // release rate in meters/second
     };
 
+    struct PACKED Reward_Command {
+        int reward_value;
+    };
+
     union Content {
         // jump structure
         Jump_Command jump;
@@ -264,6 +268,9 @@ public:
 
         // location
         Location location{};      // Waypoint location
+
+        // Rewards
+        Reward_Command reward;
     };
 
     // command structure
