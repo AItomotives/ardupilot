@@ -2182,8 +2182,6 @@ const char *AP_Mission::Mission_Command::type() const
     switch (id) {
     case MAV_CMD_NAV_WAYPOINT:
             return "WP";
-            case MAV_CMD_NAV_WAYPOINT:
-            return "WP";
     case MAV_CMD_NAV_SPLINE_WAYPOINT:
         return "SplineWP";
     case MAV_CMD_NAV_RETURN_TO_LAUNCH:

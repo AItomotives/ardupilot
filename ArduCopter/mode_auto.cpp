@@ -699,6 +699,7 @@ bool ModeAuto::verify_command(const AP_Mission::Mission_Command& cmd)
 
     case MAV_CMD_NAV_WAYPOINT_REWARD:
         cmd_complete = verify_reward();
+        break;
     default:
         // error message
         gcs().send_text(MAV_SEVERITY_WARNING,"Skipping invalid cmd #%i",cmd.id);
@@ -1388,11 +1389,11 @@ void ModeAuto::do_yaw(const AP_Mission::Mission_Command& cmd)
 
 int REWARD = 0;
 
-void ModeAuto::do_update_reward(const AP_Mission::MissionCommand& cmd) {
-    REWARD = REWARD + cmd.content.reward_value;
-    Console.log("Reward updated, now: ");
-    Console.log(REWARD);
-    return
+void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
+    REWARD = REWARD + cmd.content.reward.reward_value;
+//    Console.log("Reward updated, now: ");
+//    Console.log(REWARD);
+    return;
 }
 
 void ModeAuto::do_change_speed(const AP_Mission::Mission_Command& cmd)
