@@ -859,28 +859,15 @@ MAV_MISSION_RESULT AP_Mission::mavlink_int_to_mission_cmd(const mavlink_mission_
 #endif
         }
             break;
-    case MAV_CMD_NAV_WAYPOINT_REWARD: {                        // MAV ID: 16
-            /*
-              the 15 byte limit means we can't fit both delay and radius
-              in the cmd structure. When we expand the mission structure
-              we can do this properly
-             */
-#if APM_BUILD_TYPE(APM_BUILD_ArduPlane)
-            // acceptance radius in meters and pass by distance in meters
-        uint16_t acp = packet.param2;           // param 2 is acceptance radius in meters is held in low p1
-        uint16_t passby = packet.param3;        // param 3 is pass by distance in meters is held in high p1
+    case MAV_CMD_NAV_WAYPOINT_REWARD: {                        // MAV ID: 26
+        uint16_t reward = packet.param1;
 
         // limit to 255 so it does not wrap during the shift or mask operation
-        passby = MIN(0xFF,passby);
-        acp = MIN(0xFF,acp);
+        reward = MIN(0xFF,reward);
 
-        cmd.p1 = (passby << 8) | (acp & 0x00FF);
-#else
-            // delay at waypoint in seconds (this is for copters???)
-            cmd.p1 = packet.param1;
-#endif
-        }
-            break;
+        cmd.p1 = (reward << 8);
+    }
+        break;
 
     case MAV_CMD_NAV_LOITER_UNLIM:                      // MAV ID: 17
         cmd.p1 = fabsf(packet.param3);                  // store radius as 16bit since no other params are competing for space
@@ -1313,16 +1300,8 @@ bool AP_Mission::mission_cmd_to_mavlink_int(const AP_Mission::Mission_Command& c
             packet.param1 = cmd.p1;
 #endif
             break;
-        case MAV_CMD_NAV_WAYPOINT_REWARD:                          // MAV ID: 16
-#if APM_BUILD_TYPE(APM_BUILD_ArduPlane)
-            // acceptance radius in meters
-
-        packet.param2 = LOWBYTE(cmd.p1);        // param 2 is acceptance radius in meters is held in low p1
-        packet.param3 = HIGHBYTE(cmd.p1);       // param 3 is pass by distance in meters is held in high p1
-#else
-            // delay at waypoint in seconds
-            packet.param1 = cmd.p1;
-#endif
+        case MAV_CMD_NAV_WAYPOINT_REWARD:                          // MAV ID: 26
+            packet.param1 = LOWBYTE(cmd.p1);
             break;
 
         case MAV_CMD_NAV_LOITER_UNLIM:                      // MAV ID: 17
