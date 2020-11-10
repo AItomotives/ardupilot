@@ -496,8 +496,7 @@ bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd)
 #endif
 
     case MAV_CMD_NAV_WAYPOINT_REWARD:
-//        do_update_reward(cmd);
-        hal.console->printf("calling do update reward was breaking it");
+        do_update_reward(cmd);
         break;
 
     default:
@@ -1391,9 +1390,8 @@ void ModeAuto::do_yaw(const AP_Mission::Mission_Command& cmd)
 int REWARD = 0;
 
 void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
-//    REWARD = REWARD + cmd.content.reward.reward_value;
-//    hal.console->printf("%d", REWARD);
-    hal.console->printf("hello world");
+    REWARD = REWARD + cmd.content.reward.reward_value;
+    hal.console->printf("%d", REWARD);
     return;
 }
 
