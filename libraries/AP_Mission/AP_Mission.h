@@ -451,6 +451,9 @@ public:
     ///     accounts for do_jump commands
     bool get_next_nav_cmd(uint16_t start_index, Mission_Command& cmd);
 
+    // We are the senate
+    Mission_Command* get_nav_cmd_list(Mission_Command& cmd);
+
     /// get the ground course of the next navigation leg in centidegrees
     /// from 0 36000. Return default_angle if next navigation
     /// leg cannot be determined

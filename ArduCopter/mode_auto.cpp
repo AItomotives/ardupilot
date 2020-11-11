@@ -380,6 +380,8 @@ bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd)
         copter.logger.Write_Mission_Cmd(mission, cmd);
     }
 
+    hal.console->printf("%p", &mission);
+
     switch(cmd.id) {
 
     ///
