@@ -399,6 +399,20 @@ bool AP_Mission::get_next_nav_cmd(uint16_t start_index, Mission_Command& cmd)
     return false;
 }
 
+Mission_Command** AP_Mission::get_nav_cmd_list(Mission_Command& cmd) {
+
+    Mission_Command* bullshit[100];
+    uint16_t fake_index = 0;
+    int our_index = 0;
+
+    while(get_next_cmd(fake_index, cmd, false)){
+        if (is_nav_cmd(cmd)) {
+            bullshit[our_index++] = &cmd;
+        }
+    }
+    return bullshit;
+}
+
 /// get the ground course of the next navigation leg in centidegrees
 /// from 0 36000. Return default_angle if next navigation
 /// leg cannot be determined
