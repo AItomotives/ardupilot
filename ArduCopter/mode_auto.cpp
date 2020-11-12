@@ -1395,8 +1395,8 @@ void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
     hal.console->printf("\n Received: %d. New Reward Value: %d\n", received, REWARD);
     return;
 }
-static void ModeAuto::do_update_reward(int reward) {
-    REWARD = REWARD + reward
+void ModeAuto::do_update_reward(int reward) {
+    REWARD = REWARD + reward;
     hal.console->printf("%d", REWARD);
     return;
 }
