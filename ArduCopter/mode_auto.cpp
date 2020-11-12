@@ -1390,8 +1390,9 @@ void ModeAuto::do_yaw(const AP_Mission::Mission_Command& cmd)
 int REWARD = 0;
 
 void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
-    REWARD = REWARD + cmd.content.reward.reward_value;
-    hal.console->printf("%d", REWARD);
+    int received = cmd.p1 - cmd.p2;
+    REWARD = REWARD + received;
+    hal.console->printf("\n Received: %d. New Reward Value: %d\n", received, REWARD);
     return;
 }
 
