@@ -507,6 +507,7 @@ bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd)
     // always return success
     return true;
 }
+}
 
 // exit_mission - function that is called once the mission completes
 void ModeAuto::exit_mission()
@@ -1393,6 +1394,11 @@ void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
     int received = cmd.p1 - cmd.p2;
     REWARD = REWARD + received;
     hal.console->printf("\n Received: %d. New Reward Value: %d\n", received, REWARD);
+    return;
+}
+void ModeAuto::do_update_reward(int reward) {
+    REWARD = REWARD + reward
+    hal.console->printf("%d", REWARD);
     return;
 }
 
