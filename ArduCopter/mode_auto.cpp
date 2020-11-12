@@ -1388,14 +1388,14 @@ void ModeAuto::do_yaw(const AP_Mission::Mission_Command& cmd)
 // Do (Now) commands
 /********************************************************************************/
 
-int REWARD = 0;
+static int REWARD = 0;
 
 void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
     REWARD = REWARD + cmd.content.reward.reward_value;
     hal.console->printf("%d", REWARD);
     return;
 }
-void ModeAuto::do_update_reward(int reward) {
+static void ModeAuto::do_update_reward(int reward) {
     REWARD = REWARD + reward
     hal.console->printf("%d", REWARD);
     return;

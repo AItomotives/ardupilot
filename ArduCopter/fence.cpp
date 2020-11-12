@@ -66,7 +66,7 @@ void Copter::fence_check()
                         break;
                         case AC_FENCE_ACTION_PENALTY:
                             // Doc a reward point for breaking fence.
-                            ModeAuto::do_update_reward(-1)
+                            ModeAuto::do_update_reward(-1);
                             break;
                     }
                 }
