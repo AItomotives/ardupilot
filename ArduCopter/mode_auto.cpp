@@ -507,7 +507,6 @@ bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd)
     // always return success
     return true;
 }
-}
 
 // exit_mission - function that is called once the mission completes
 void ModeAuto::exit_mission()
