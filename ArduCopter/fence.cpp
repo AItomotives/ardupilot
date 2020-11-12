@@ -64,6 +64,10 @@ void Copter::fence_check()
                             set_mode(Mode::Number::LAND, ModeReason::FENCE_BREACHED);
                         }
                         break;
+                        case AC_FENCE_ACTION_PENALTY:
+                            // Doc a reward point for breaking fence.
+                            ModeAuto::do_update_reward(-1)
+                            break;
                     }
                 }
             }
