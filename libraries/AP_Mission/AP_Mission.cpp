@@ -860,8 +860,10 @@ MAV_MISSION_RESULT AP_Mission::mavlink_int_to_mission_cmd(const mavlink_mission_
         }
             break;
     case MAV_CMD_NAV_WAYPOINT_REWARD: {                        // MAV ID: 26
-        cmd.content.reward.reward_value = packet.param1;
+        cmd.p1 = packet.param1;
+        cmd.p2 = packet.param2;
         // limit to 255 so it does not wrap during the shift or mask operation
+//        int reward = packet.param1;
 //        reward = MIN(0xFF,reward);
 //        cmd.p1 = (reward << 8);
 //        cmd.p1 = reward;
@@ -1300,7 +1302,7 @@ bool AP_Mission::mission_cmd_to_mavlink_int(const AP_Mission::Mission_Command& c
 #endif
             break;
         case MAV_CMD_NAV_WAYPOINT_REWARD:                          // MAV ID: 26
-            packet.param1 = cmd.p1;
+            packet.param1 = cmd.content.reward.reward_value;
             break;
 
         case MAV_CMD_NAV_LOITER_UNLIM:                      // MAV ID: 17
