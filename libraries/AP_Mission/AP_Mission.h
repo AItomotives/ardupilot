@@ -12,6 +12,7 @@
  */
 #pragma once
 
+#include <vector>
 #include <AP_HAL/AP_HAL.h>
 #include <GCS_MAVLink/GCS_MAVLink.h>
 #include <AP_Math/AP_Math.h>
@@ -452,7 +453,7 @@ public:
     bool get_next_nav_cmd(uint16_t start_index, Mission_Command& cmd);
 
     // We are the senate
-    bool get_nav_cmd_list(Mission_Command& cmd, Mission_Command** command_list);
+    std::vector<Mission_Command> get_nav_cmd_list(Mission_Command& cmd);
 
     /// get the ground course of the next navigation leg in centidegrees
     /// from 0 36000. Return default_angle if next navigation

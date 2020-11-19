@@ -373,8 +373,16 @@ void ModeAuto::payload_place_start()
 }
 
 // start_command - this function will be called when the ap_mission lib wishes to start a new command
-bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd)
-{
+bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd) {
+
+if (commandList.empty()){
+    std::vector<AP_Mission::Mission_Command> allCommands = mission.get_nav_cmd_list(cmd);
+    int curidx = 0;
+    while(true){
+        commandList.addToVector(allCommands.at(curidx), allCommands.at(curidx+1));
+        curidx += 2;
+    }
+}
     // To-Do: logging when new commands start/end
     if (copter.should_log(MASK_LOG_CMD)) {
         copter.logger.Write_Mission_Cmd(mission, cmd);

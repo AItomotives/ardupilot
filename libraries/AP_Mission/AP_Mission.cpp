@@ -5,6 +5,7 @@
 #include <AP_Terrain/AP_Terrain.h>
 #include <GCS_MAVLink/GCS.h>
 #include <AP_AHRS/AP_AHRS.h>
+#include <vector>
 
 const AP_Param::GroupInfo AP_Mission::var_info[] = {
 
@@ -399,17 +400,15 @@ bool AP_Mission::get_next_nav_cmd(uint16_t start_index, Mission_Command& cmd)
     return false;
 }
 
-bool AP_Mission::get_nav_cmd_list(Mission_Command& cmd, Mission_Command** command_list) {
+std::vector<AP_Mission::Mission_Command> AP_Mission::get_nav_cmd_list(AP_Mission::Mission_Command& cmd) {
 
     uint16_t fake_index = 0;
-    int our_index = 0;
+    std::vector<AP_Mission::Mission_Command> commands; 
 
     while(get_next_cmd(fake_index, cmd, false)){
-        if (is_nav_cmd(cmd)) {
-            command_list[our_index++] = &cmd;
-        }
-    }
-    return true;
+        commands.push_back(cmd);
+    };
+    return commands;
 }
 
 /// get the ground course of the next navigation leg in centidegrees

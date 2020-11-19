@@ -17,7 +17,7 @@ class Mode {
     AP_Mission::Mission_Command navCommand;
     AP_Mission::Mission_Command rewardCommand;
 
-    NavAndReward(AP_Mission::Mission_Command navCmd, AP_Mission::Mission_Command rwdCmd) {
+    public: NavAndReward(AP_Mission::Mission_Command navCmd, AP_Mission::Mission_Command rwdCmd) {
         navCommand = navCmd;
         rewardCommand = rwdCmd;
     };
@@ -26,14 +26,23 @@ class Mode {
 
 class CommandList {
         
-    std::vector<NavAndReward> NavRewardPairs;
+    std::vector<Mode::NavAndReward> commands;
     int size;
 
+    public: 
     CommandList() {
     size = 0;
     };
     void addCommand(AP_Mission::Mission_Command cmd);
-    void getCommand(int idx);
+    Mode::NavAndReward getCommand(int idx);
+    std::vector<Mode::NavAndReward> getCommandsVector() { return commands; }
+
+    bool empty() { return commands.empty(); }
+
+    void addToVector(AP_Mission::Mission_Command navCmd, AP_Mission::Mission_Command rwdCmd) {
+        NavAndReward toAdd = NavAndReward(navCmd, rwdCmd);
+        commands.push_back(toAdd);
+    }
 };
 
 public:
@@ -545,7 +554,7 @@ private:
     } nav_payload_place;
 
     // Store our own commands structure
-    //CommandList commandList;
+    Mode::CommandList commandList;
 };
 
 #if AUTOTUNE_ENABLED == ENABLED
