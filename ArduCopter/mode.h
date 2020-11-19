@@ -51,11 +51,12 @@ class CommandList {
 
     std::vector<Mode::NavAndReward> getNotCompletedCommands() { 
         std::vector<Mode::NavAndReward> incompletes = std::vector<Mode::NavAndReward>();
-        for (int i=0; i < commands.size(); i++ ) {
+        for (int i=0; i < (int) commands.size(); i++ ) {
             if (!commands.at(i).completed) {
                 incompletes.push_back(commands.at(i));
             };
         };
+        return incompletes;
     };
 
 };
