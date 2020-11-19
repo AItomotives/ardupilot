@@ -175,7 +175,6 @@
 #include <SITL/SITL.h>
 #endif
 
-
 #include "mode.h"
 
 class Copter : public AP_Vehicle {
