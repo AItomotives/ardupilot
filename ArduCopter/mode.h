@@ -515,6 +515,9 @@ private:
         float descend_start_altitude;
         float descend_max; // centimetres
     } nav_payload_place;
+
+    // Store our own commands structure
+    CommandList commandList;
 };
 
 #if AUTOTUNE_ENABLED == ENABLED

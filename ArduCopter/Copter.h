@@ -175,6 +175,10 @@
 #include <SITL/SITL.h>
 #endif
 
+//Our bullshit
+#include "CommandList.h"
+#include "NavAndReward.h"
+
 #include "mode.h"
 
 class Copter : public AP_Vehicle {
