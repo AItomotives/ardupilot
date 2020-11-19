@@ -1398,11 +1398,11 @@ void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
     return;
 }
 
-//static void ModeAuto::do_update_reward(int reward) {
-//    REWARD = REWARD + reward
-//    hal.console->printf("%d", REWARD);
-//    return;
-//}
+void ModeAuto::do_update_reward_fence(int reward) {
+    REWARD = REWARD + reward;
+    hal.console->printf("%d", REWARD);
+    return;
+}
 
 void ModeAuto::do_change_speed(const AP_Mission::Mission_Command& cmd)
 {

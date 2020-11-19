@@ -71,7 +71,7 @@ void Copter::fence_check()
                 }
             }
         }
-        ModeAuto::do_update_reward(-1);
+        ModeAuto::do_update_reward_fence(-1);
         AP::logger().Write_Error(LogErrorSubsystem::FAILSAFE_FENCE, LogErrorCode(new_breaches));
 
     } else if (orig_breaches) {
