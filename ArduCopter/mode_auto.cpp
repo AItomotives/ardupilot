@@ -1391,8 +1391,6 @@ static int REWARD = 0;
 
 void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
     int received = (int16_t)cmd.p1;
-//    int received = cmd.p1 - cmd.content.reward.reward_value;
-//    hal.console->printf("\ncmd.p1: %d, cmd.p2: %d\n", cmd.p1, cmd.content.reward.reward_value);
     REWARD = REWARD + received;
     hal.console->printf("\n Received: %d. New Reward Value: %d\n", received, REWARD);
     return;
@@ -1400,7 +1398,7 @@ void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
 
 void ModeAuto::do_update_reward_fence(int reward) {
     REWARD = REWARD + reward;
-    hal.console->printf("%d", REWARD);
+    hal.console->printf("\n Fence breached with value: %d. New Reward Value: %d\n", reward, REWARD);
     return;
 }
 
