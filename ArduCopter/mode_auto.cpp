@@ -378,10 +378,13 @@ bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd) {
 if (commandList.empty()){
     std::vector<AP_Mission::Mission_Command> allCommands = mission.get_nav_cmd_list(cmd);
     int curidx = 0;
-    while(true){
+    int max = mission.num_commands();
+    for (curidx; curidx < max; curidx += 2){
         commandList.addToVector(allCommands.at(curidx), allCommands.at(curidx+1));
-        curidx += 2;
     }
+    while (commandList.getNotCompletedCommands().size() > 0) {
+        std::vector<Mode::NavAndReward>possibleCommands = commandList.getNotCompletedCommands();
+    };
 }
     // To-Do: logging when new commands start/end
     if (copter.should_log(MASK_LOG_CMD)) {

@@ -400,7 +400,7 @@ bool AP_Mission::get_next_nav_cmd(uint16_t start_index, Mission_Command& cmd)
     return false;
 }
 
-std::vector<AP_Mission::Mission_Command> AP_Mission::get_nav_cmd_list(AP_Mission::Mission_Command& cmd) {
+std::vector<AP_Mission::Mission_Command> AP_Mission::get_nav_cmd_list(AP_Mission::Mission_Command cmd) {
 
     uint16_t fake_index = 0;
     std::vector<AP_Mission::Mission_Command> commands; 

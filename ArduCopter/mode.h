@@ -12,14 +12,19 @@ class GCS_Copter;
 
 class Mode {
 
+public:
+
     class NavAndReward {
 
+    public: 
     AP_Mission::Mission_Command navCommand;
     AP_Mission::Mission_Command rewardCommand;
+    bool completed;
 
-    public: NavAndReward(AP_Mission::Mission_Command navCmd, AP_Mission::Mission_Command rwdCmd) {
+    NavAndReward(AP_Mission::Mission_Command navCmd, AP_Mission::Mission_Command rwdCmd) {
         navCommand = navCmd;
         rewardCommand = rwdCmd;
+        completed = false;
     };
 
 };
@@ -43,9 +48,17 @@ class CommandList {
         NavAndReward toAdd = NavAndReward(navCmd, rwdCmd);
         commands.push_back(toAdd);
     }
-};
 
-public:
+    std::vector<Mode::NavAndReward> getNotCompletedCommands() { 
+        std::vector<Mode::NavAndReward> incompletes;
+        for (int i=0; i < commands.size(); i++ ) {
+            if (!commands.at(i).completed) {
+                incompletes.push_back(commands.at(i));
+            };
+        };
+    };
+
+};
 
     // Auto Pilot Modes enumeration
     enum class Number : uint8_t {
