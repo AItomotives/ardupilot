@@ -1390,16 +1390,19 @@ void ModeAuto::do_yaw(const AP_Mission::Mission_Command& cmd)
 static int REWARD = 0;
 
 void ModeAuto::do_update_reward(const AP_Mission::Mission_Command& cmd) {
-    int received = cmd.p1 - cmd.p2;
+    int received = (int16_t)cmd.p1;
+//    int received = cmd.p1 - cmd.content.reward.reward_value;
+//    hal.console->printf("\ncmd.p1: %d, cmd.p2: %d\n", cmd.p1, cmd.content.reward.reward_value);
     REWARD = REWARD + received;
     hal.console->printf("\n Received: %d. New Reward Value: %d\n", received, REWARD);
     return;
 }
-static void ModeAuto::do_update_reward(int reward) {
-    REWARD = REWARD + reward
-    hal.console->printf("%d", REWARD);
-    return;
-}
+
+//static void ModeAuto::do_update_reward(int reward) {
+//    REWARD = REWARD + reward
+//    hal.console->printf("%d", REWARD);
+//    return;
+//}
 
 void ModeAuto::do_change_speed(const AP_Mission::Mission_Command& cmd)
 {
