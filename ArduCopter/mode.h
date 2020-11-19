@@ -1,9 +1,8 @@
 #pragma once
 
-#include "CommandList.h"
-#include "NavAndReward.h"
-
 #include "Copter.h"
+
+#include "CommandList.h"
 class Parameters;
 class ParametersG2;
 
