@@ -66,13 +66,12 @@ void Copter::fence_check()
                         break;
                         case AC_FENCE_ACTION_PENALTY:
                             // Doc a reward point for breaking fence.
-                            ModeAuto::do_update_reward(-1);
                             break;
                     }
                 }
             }
         }
-
+        ModeAuto::do_update_reward(-1);
         AP::logger().Write_Error(LogErrorSubsystem::FAILSAFE_FENCE, LogErrorCode(new_breaches));
 
     } else if (orig_breaches) {
