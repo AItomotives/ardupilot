@@ -1,4 +1,5 @@
 #include "Copter.h"
+#include <stdlib.h>
 
 #if MODE_AUTO_ENABLED == ENABLED
 
@@ -383,7 +384,9 @@ if (commandList.empty()){
         commandList.addToVector(allCommands.at(curidx), allCommands.at(curidx+1));
     }
     while (commandList.getNotCompletedCommands().size() > 0) {
-        std::vector<Mode::NavAndReward>possibleCommands = commandList.getNotCompletedCommands();
+        std::vector<Mode::NavAndReward> possibleCommands = std::vector<Mode::NavAndReward>(commandList.getNotCompletedCommands());
+        int nextwaypoint = std::rand() % possibleCommands.size();
+        start_command((possibleCommands.at(nextwaypoint).navCommand));
     };
 }
     // To-Do: logging when new commands start/end
