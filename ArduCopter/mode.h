@@ -10,29 +10,31 @@ class ParametersG2;
 
 class GCS_Copter;
 
-class NavAndReward {
+class Mode {
 
-    public:
-        AP_Mission::Mission_Command navCommand;
-        AP_Mission::Mission_Command rewardCommand;
+    class NavAndReward {
 
-        NavAndReward(AP_Mission::Mission_Command navCmd, AP_Mission::Mission_Command rwdCmd);
+    AP_Mission::Mission_Command navCommand;
+    AP_Mission::Mission_Command rewardCommand;
+
+    NavAndReward(AP_Mission::Mission_Command navCmd, AP_Mission::Mission_Command rwdCmd) {
+        navCommand = navCmd;
+        rewardCommand = rwdCmd;
+    };
 
 };
 
 class CommandList {
-
-    public:
         
-        std::vector<NavAndReward> NavRewardPairs;
-        int size;
+    std::vector<NavAndReward> NavRewardPairs;
+    int size;
 
-        CommandList();
-        void addCommand(AP_Mission::Mission_Command cmd);
-        void getCommand(int idx);
+    CommandList() {
+    size = 0;
+    };
+    void addCommand(AP_Mission::Mission_Command cmd);
+    void getCommand(int idx);
 };
-
-class Mode {
 
 public:
 
@@ -543,7 +545,7 @@ private:
     } nav_payload_place;
 
     // Store our own commands structure
-    CommandList commandList;
+    //CommandList commandList;
 };
 
 #if AUTOTUNE_ENABLED == ENABLED
