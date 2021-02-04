@@ -43,6 +43,30 @@ const AP_Param::Info Copter::var_info[] = {
     // @ReadOnly: True
     GSCALAR(format_version, "FORMAT_VERSION",   0),
 
+    // @Param: DEPLOY_LANDING_GEAR
+    // @DisplayName: Deploy landing gear
+    // @Description: This value is either zero or not zero, changing when the user wants to take action
+    // @User: Advanced
+    GSCALAR(deploy_landing_gear, "DEPLOY_LAND_GEAR", 0),
+
+    // @Param: TAKE_PHOTO
+    // @DisplayName: Take photo
+    // @Description: This value is either zero or not zero, changing when the user wants to take action
+    // @User: Advanced
+    GSCALAR(take_photo, "TAKE_PHOTO", 0),
+
+    // @Param: PICK_UP_OBJECT
+    // @DisplayName: Pick up object
+    // @Description: This value is either zero or not zero, changing when the user wants to take action
+    // @User: Advanced
+    GSCALAR(pick_up_object, "PICK_UP_OBJECT", 0),
+
+    // @Param: RELEASE_OBJECT
+    // @DisplayName: Release object
+    // @Description: This value is either zero or not zero, changing when the user wants to take action
+    // @User: Advanced
+    GSCALAR(release_object, "RELEASE_OBJECT", 0),
+
     // @Param: SYSID_THISMAV
     // @DisplayName: MAVLink system ID of this vehicle
     // @Description: Allows setting an individual MAVLink system id for this vehicle to distinguish it from others on the same network

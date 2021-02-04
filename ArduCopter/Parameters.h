@@ -199,6 +199,14 @@ public:
         k_param_circle_nav,
         k_param_loiter_nav,     // 105
 
+        //
+        // 106: Mocked Tasks
+        //
+        k_param_deploy_landing_gear = 106,
+        k_param_take_photo,
+        k_param_pick_up_object,
+        k_param_release_object, // 109 - full
+
         // 110: Telemetry control
         //
         k_param_gcs0 = 110,
@@ -377,6 +385,12 @@ public:
     };
 
     AP_Int16        format_version;
+
+    // Mocked Tasks
+    AP_Int8         deploy_landing_gear;
+    AP_Int8         take_photo;
+    AP_Int8         pick_up_object;
+    AP_Int8         release_object;
 
     // Telemetry control
     //
