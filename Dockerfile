@@ -37,6 +37,12 @@ RUN ./install_geographiclib_datasets.sh
 
 RUN apt-get install -y python-catkin-tools
 
+RUN apt-get install -y xterm
+
+RUN apt-get install -y x11-apps
+
+RUN apt-get install -y dropbear
+
 RUN mkdir -p ~/catkin_ws/src
 
 RUN useradd -U -m ardupilot && \
@@ -80,3 +86,4 @@ USER ardupilot
 RUN sudo apt-get clean \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ENV CCACHE_MAXSIZE=1G
+RUN dropbear
