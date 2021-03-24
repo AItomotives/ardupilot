@@ -83,4 +83,8 @@ USER ardupilot
 # Cleanup
 RUN sudo apt-get clean \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-ENV CCACHE_MAXSIZE=1
+
+ENV CCACHE_MAXSIZE=1G
+
+# Ros Setup
+ENV rossetup=/opt/ros/melodic/setup.bash
