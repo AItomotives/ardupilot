@@ -89,8 +89,7 @@ ENV CCACHE_MAXSIZE=1G
 # Ros Setup
 ENV rossetup="/opt/ros/melodic/setup.bash"
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash"
-RUN rosinstall_generator --rosdistro kinetic mavlink | tee /tmp/mavros.rosinstall
 RUN sudo rosdep init
 RUN rosdep update
-RUN rosdep install --from-paths /tmp/mavros.rosinstall --ignore-src -y
+RUN rosdep install --from-paths /catkin_ws/mavros.rosinstall --ignore-src -y
 USER ardupilot
