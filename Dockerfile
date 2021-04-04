@@ -91,5 +91,4 @@ ENV rossetup="/opt/ros/melodic/setup.bash"
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash"
 RUN sudo rosdep init
 RUN rosdep update
-RUN rosdep install --from-paths /catkin_ws/mavros.rosinstall --ignore-src -y
 USER ardupilot
